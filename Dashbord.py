@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import pandas as pd
 
@@ -20,6 +22,19 @@ def load_data():
 
 
 df = load_data()
+
+# Ajout API Key
+try:
+    st.sidebar().write(st.secrets['API_KEY'])
+except:
+    st.error("No API key found.")
+# clef secret sur heroku
+try:
+    os.environ['API_KEY']
+except KeyError:
+    st.error("No API key found.")
+
+
 # Ajouter un titre
 st.title('My Dashboard')
 
@@ -64,12 +79,3 @@ with st.form(key="my_form"):
             plot = sns.histplot(data=data_age, bins=age_slider[1] - age_slider[0])
             # Afficher un plot
             st.pyplot(plot.figure)
-
-col_cam, cam = st.columns(2)
-with col_cam:
-    enable = st.checkbox("Enable camera")
-    picture = st.camera_input("Take a picture", disabled=not enable)
-
-with cam:
-    if picture:
-        st.image(picture)
