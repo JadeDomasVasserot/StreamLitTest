@@ -4,7 +4,15 @@ import pandas as pd
 # https://streamlit.io
 
 path = 'https://raw.githubusercontent.com/Quera-fr/Python-Programming/refs/heads/main/data.csv'
-df = pd.read_csv(path)
+
+
+@st.cache_data
+def load_data():
+    return pd.read_csv(path)
+
+
+df = load_data()
+
 # Configurer la page
 st.set_page_config(
     page_title="My Dashbord",
@@ -45,7 +53,7 @@ with st.form(key="my_form"):
         profession = st.selectbox("Sélectionner une option ", options=df.Profession.unique())
         # SLider
         age_slider = st.slider("Sélectionner un âge", min_value=df.Age.min(), max_value=df.Age.max(),
-                  value=(df.Age.min(), df.Age.max()))
+                               value=(df.Age.min(), df.Age.max()))
         # filtre age selon profession
         st.write(str(age_slider))
         button = st.form_submit_button("Envoyer")
@@ -55,8 +63,6 @@ with st.form(key="my_form"):
             plot = sns.histplot(data=data_age, bins=age_slider[1] - age_slider[0])
             # Afficher un plot
             st.pyplot(plot.figure)
-
-
 
 col_cam, cam = st.columns(2)
 with col_cam:
