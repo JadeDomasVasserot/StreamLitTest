@@ -3,6 +3,14 @@ import pandas as pd
 
 # https://streamlit.io
 
+
+
+# Configurer la page
+st.set_page_config(
+    page_title="My Dashbord",
+    page_icon="💶",
+    layout="wide",
+)
 path = 'https://raw.githubusercontent.com/Quera-fr/Python-Programming/refs/heads/main/data.csv'
 
 
@@ -12,13 +20,6 @@ def load_data():
 
 
 df = load_data()
-
-# Configurer la page
-st.set_page_config(
-    page_title="My Dashbord",
-    page_icon="💶",
-    layout="wide",
-)
 # Ajouter un titre
 st.title('My Dashboard')
 
